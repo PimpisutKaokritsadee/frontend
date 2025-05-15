@@ -1,9 +1,13 @@
 import { User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { useActivityStore } from "../../../stores/Admin/activity_store";
+// import { useActivityStore } from "../../../stores/Admin/activity_store";
+
 import { useParams } from "react-router-dom";
 import Button from "../../../components/Button";
+import { useEnrolledStudentStore } from "../../../stores/Admin/enrolled_student_admin";
+import { useActivityStore } from "../../../stores/Admin/activity_info_admin";
+
 
 export default function enrolled_list_admin() {
   const { id } = useParams<{ id: string }>();
@@ -11,10 +15,16 @@ export default function enrolled_list_admin() {
   const {
     activity,
     fetchActivity,
-    enrolledStudents,
-    fetchEnrolledStudents,
+    // enrolledStudents,
+    // fetchEnrolledStudents,
     activityLoading,
   } = useActivityStore();
+
+  const {
+    enrolledStudents,
+    fetchEnrolledStudents,
+  } = useEnrolledStudentStore();
+
 
   const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<string[]>([]);

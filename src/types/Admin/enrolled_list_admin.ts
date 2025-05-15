@@ -1,3 +1,5 @@
+import { Activity } from "./activity_info_admin";
+
 export interface EnrolledStudent {
   id: string;
   name: string;
@@ -7,4 +9,12 @@ export interface EnrolledStudent {
   checkOut: string;
   evaluated: string;
   selectedfood: string;
+}
+
+export interface EnrolledStudentState {
+  activityLoading: boolean;
+  activity: Activity | null;
+  enrolledStudents: EnrolledStudent[];
+  fetchActivity: (id: number | string) => Promise<void>;
+  fetchEnrolledStudents: (id: number | string) => Promise<void>;
 }

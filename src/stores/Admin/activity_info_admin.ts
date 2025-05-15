@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { ActivityState, ApiActivity, Activity } from "../../types/Admin/activity_info_admin";
-import { fetchAllActivities, fetchActivityById} from "../../services/Admin/activity_info_admin";
+import { fetchActivityById }from "../../services/Admin/activity_info_admin";
 
 // ✅ mapActivityData ยังอยู่ใน store ตามที่คุณต้องการ
 const mapActivityData = (apiData: ApiActivity): Activity => ({
@@ -66,18 +66,6 @@ export const useActivityStore = create<ActivityState>((set, get) => ({
   activityLoading: false,
   activity: null,
   enrolledStudents: [],
-
-  fetchActivities: async () => {
-    set({ activityLoading: true, activityError: null });
-    try {
-      const raw = await fetchAllActivities();
-      const formatted = raw.map(mapActivityData);
-      set({ activities: formatted, activityLoading: false });
-    } catch (error) {
-      console.error("❌ Error fetching activities:", error);
-      set({ activityError: "ไม่สามารถโหลดกิจกรรมได้", activityLoading: false });
-    }
-  },
 
   fetchActivity: async (id: number | string) => {
     set({ activityLoading: true, activityError: null });

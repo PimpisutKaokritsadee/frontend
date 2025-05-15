@@ -77,15 +77,5 @@ export interface ActivityState {
   activityError: string | null;
   activityLoading: boolean;
   activity: Activity | null;
-  // enrolledStudents: EnrolledStudent[];
-  fetchActivities: () => Promise<void>;
-  // searchActivities: (query: string) => Promise<void>;
-  // updateActivityStatus: (
-  //   id: string,
-  //   currentStatus: "Public" | "Private"
-  // ) => Promise<void>;
-  // updateActivity: (activity: Activity) => Promise<void>;
   fetchActivity: (id: number | string) => Promise<void>;
-  // fetchEnrolledStudents: (id: number | string) => Promise<void>;
-  // createActivity: (activity: ApiActivity) => Promise<void>;
 }
