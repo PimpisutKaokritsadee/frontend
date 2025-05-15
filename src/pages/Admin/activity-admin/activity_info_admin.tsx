@@ -1,6 +1,8 @@
 import { useEffect, useCallback } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useActivityStore } from "../../../stores/Admin/activity_store";
+// import { useActivityStore } from "../../../stores/Admin/activity_store";
+import { useActivityStore } from "../../../stores/Admin/activity_info_admin";
+
 import {
   Clock,
   MapPin,
