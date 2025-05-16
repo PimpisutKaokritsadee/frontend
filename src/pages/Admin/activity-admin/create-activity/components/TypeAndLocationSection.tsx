@@ -5,21 +5,29 @@ import { SelectChangeEvent } from "@mui/material";
 interface Props {
   formData: any;
   handleChange: (e: React.ChangeEvent<any> | SelectChangeEvent) => void;
-  handleChangeSelect: (e: SelectChangeEvent) => void;
+  setSelectedFloor: (val: string) => void;
+  setSelectedRoom: (val: string) => void;
+  setSeatCapacity: (val: string) => void;
 }
 
-const TypeAndLocationSection: React.FC<Props> = ({ formData, handleChange, handleChangeSelect }) => {
+const TypeAndLocationSection: React.FC<Props> = ({
+  formData,
+  handleChange,
+  setSelectedFloor,
+  setSelectedRoom,
+  setSeatCapacity,
+}) => {
   return (
     <div className="flex space-x-6 items-center mt-6">
       {/* ประเภทกิจกรรม */}
-      <div>
-        <label className="block font-semibold w-50">ประเภท *</label>
+      <div className="w-140">
+        <label className="block font-semibold">ประเภท *</label>
         <Select
           labelId="ac_type-label"
           name="ac_type"
           value={formData.ac_type}
           onChange={handleChange}
-          className="rounded w-140"
+          className="rounded w-full"
           displayEmpty
           renderValue={(selected) => {
             if (!selected) {
@@ -43,14 +51,22 @@ const TypeAndLocationSection: React.FC<Props> = ({ formData, handleChange, handl
       </div>
 
       {/* ประเภทสถานที่ */}
-      <div>
-        <label className="block font-semibold w-50">ประเภทสถานที่จัดกิจกรรม *</label>
+      <div className="w-76">
+        <label className="block font-semibold">ประเภทสถานที่จัดกิจกรรม *</label>
         <Select
           labelId="ac_location_type-label"
           name="ac_location_type"
           value={formData.ac_location_type}
-          onChange={handleChangeSelect}
-          className="rounded w-76"
+          onChange={(e) => {
+            handleChange(e); // อัปเดต formData ปกติ
+            if (e.target.value !== "Onsite") {
+              // ถ้าไม่ใช่ Onsite → ล้างค่าที่เกี่ยวข้องกับห้อง
+              setSelectedFloor("");
+              setSelectedRoom("");
+              setSeatCapacity("");
+            }
+          }}
+          className="rounded w-full"
           sx={{
             height: "56px",
             "& .MuiSelect-select": { padding: "8px" },

@@ -23,7 +23,16 @@ import { SelectChangeEvent } from "@mui/material"; // ✅ นำเข้า Sel
 import { useActivityStore } from "../../../../stores/Admin/store_create_activity";
 import type { FormData } from "../../../../types/Admin/type_create_activity_admin";
 
-
+import {
+  handleChange,
+  handleDateTimeChange,
+  handleFileChange,
+  validateForm,
+  convertToDate,
+} from "../create-activity/utils/form_utils"; // หรือเปลี่ยน path ให้ตรงกับตำแหน่งจริง
+import { handleDateTimeChange as handleDateTimeChangeBase } from "../create-activity/utils/form_utils";
+import { handleChange as baseHandleChange } from "../create-activity/utils/form_utils";
+import { handleChange as formHandleChange } from "../create-activity/utils/form_utils";
 import ActivityInfoSection from "../create-activity/components/ActivityInfoSection";
 import RegisterPeriodSection from "../create-activity/components/RegisterPeriodSection";
 import ActivityTimeSection from "../create-activity/components/ActivityTimeSection";
@@ -35,32 +44,7 @@ import ImageUploadSection from "../create-activity/components/ImageUploadSection
 import ActionButtonsSection from "../create-activity/components/ActionButtonsSection";
 import DescriptionSection from "../create-activity/components/DescriptionSection";
 import StatusAndSeatSection from "../create-activity/components/StatusAndSeatSection";
-// interface FormData {
-//   ac_id: number | null;
-//   ac_name: string;
-//   assessment_id?: number | null;
-//   ac_company_lecturer: string;
-//   ac_description../create-activity/components/
-//   ac_seat?: string | null;
-//   ac_food?: string[] | null;
-//   ac_status: string;
-//   ac_location_type: string;
-//   ac_state: string;
-//   ac_start_register: string | null;
-//   ac_end_register: string | null;
-//   ac_create_date?: string;
-//   ac_last_update?: string;
-//   ac_registered_count?: number;
-//   ac_attended_count?: number;
-//   ac_not_attended_count?: number;
-//   ac_start_time?: string | null;
-//   ac_end_time?: string | null;
-//   ac_image_url?: File | null;
-//   ac_normal_register?: string | null;
-//   ac_recieve_hours?: number | null;
-//   ac_start_assessment?: string | null;
-//   ac_end_assessment?: string | null;
-// }
+
 
 const CreateActivityAdmin: React.FC = () => {
   const { createActivity, activityLoading } = useActivityStore(); //
@@ -153,157 +137,6 @@ const CreateActivityAdmin: React.FC = () => {
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      | HTMLInputElement
-      | HTMLTextAreaElement
-      | HTMLSelectElement
-      | SelectChangeEvent
-    >
-  ) => {
-    const { name, value, type } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]:
-        type === "number" ? (value ? parseInt(value, 10) || 0 : 0) : value, // ✅ ป้องกัน null และ undefined
-    }));
-
-    switch (name) {
-      case "ac_status":
-        console.log("Status changed to:", value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleDateTimeChange = (name: string, newValue: Dayjs | null) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: newValue ? newValue.format("YYYY-MM-DDTHH:mm:ss") : null, // ✅ บันทึกเป็น Local Time
-    }));
-  };
-
-  // ✅ ปรับให้ handleChange รองรับ SelectChangeEvent
-  const handleChangeSelect = (e: SelectChangeEvent) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    // ✅ รีเซ็ตค่าชั้นและห้องถ้าเปลี่ยนจาก "Onsite" เป็นประเภทอื่น
-    if (name === "ac_location_type" && value !== "Onsite") {
-      setSelectedFloor("");
-      setSelectedRoom("");
-      setSeatCapacity("");
-    }
-  };
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  // ✅ ฟังก์ชันตรวจสอบข้อผิดพลาดในฟอร์ม
-  const validateForm = () => {
-    let newErrors: Record<string, string> = {};
-
-    if (formData.ac_status === "Public") {
-      // ชื่อกิจกรรม
-      if (!formData.ac_name || formData.ac_name.length < 4) {
-        newErrors.ac_name = "ชื่อกิจกรรมต้องมีอย่างน้อย 4 ตัวอักษร";
-      }
-
-      // วิทยากร
-      if (
-        !formData.ac_company_lecturer ||
-        formData.ac_company_lecturer.length < 4
-      ) {
-        newErrors.ac_company_lecturer = "ต้องมีอย่างน้อย 4 ตัวอักษร";
-      }
-
-      // ประเภทกิจกรรม
-      if (!formData.ac_type) {
-        newErrors.ac_type = "กรุณาเลือกประเภท";
-      }
-
-      // สถานะกิจกรรม
-      if (!formData.ac_status) {
-        newErrors.ac_status = "กรุณาเลือกสถานะ";
-      }
-
-      // วันเวลาเริ่ม-สิ้นสุดกิจกรรม
-      if (!formData.ac_start_time) {
-        newErrors.ac_start_time = "กรุณาเลือกวันและเวลาเริ่มกิจกรรม";
-      }
-      if (!formData.ac_end_time) {
-        newErrors.ac_end_time = "กรุณาเลือกวันและเวลาสิ้นสุดกิจกรรม";
-      }
-      if (
-        formData.ac_start_time &&
-        formData.ac_end_time &&
-        dayjs(formData.ac_start_time).isAfter(dayjs(formData.ac_end_time))
-      ) {
-        newErrors.ac_end_time = "วันสิ้นสุดกิจกรรมต้องมากกว่าวันเริ่มกิจกรรม";
-      }
-
-      // เวลาลงทะเบียน: ต้องอยู่หลังวันนี้ และก่อนวันปิด
-      if (
-        formData.ac_normal_register &&
-        formData.ac_end_register &&
-        (dayjs(formData.ac_normal_register).isBefore(dayjs().startOf("day")) ||
-          dayjs(formData.ac_normal_register).isAfter(
-            dayjs(formData.ac_end_register)
-          ) ||
-          dayjs(formData.ac_normal_register).isSame(
-            dayjs(formData.ac_end_register),
-            "day"
-          ))
-      ) {
-        newErrors.ac_normal_register =
-          "วันเปิดให้นิสิตสถานะ normal ลงทะเบียนต้องอยู่หลังวันนี้ และไม่ตรงหรือเกินวันปิดลงทะเบียน";
-      }
-
-      // จำนวนที่นั่ง
-      if (!formData.ac_seat || Number(formData.ac_seat) <= 0) {
-        newErrors.ac_seat = "❌ ต้องระบุจำนวนที่นั่งมากกว่า 0";
-      }
-
-      // ชั่วโมงกิจกรรม (ถ้าเป็น Course)
-      if (
-        formData.ac_location_type === "Course" &&
-        (!formData.ac_recieve_hours || Number(formData.ac_recieve_hours) <= 0)
-      ) {
-        newErrors.ac_recieve_hours =
-          "❌ ต้องระบุจำนวนชั่วโมงเป็นตัวเลขที่มากกว่า 0";
-      }
-
-      // วันที่ประเมิน: ต้องอยู่หลังวันเริ่มกิจกรรม
-      if (
-        formData.ac_start_assessment &&
-        formData.ac_start_time &&
-        dayjs(formData.ac_start_assessment).isBefore(
-          dayjs(formData.ac_start_time)
-        )
-      ) {
-        newErrors.ac_start_assessment =
-          "❌ วันเปิดประเมินต้องไม่ก่อนวันเริ่มกิจกรรม";
-      }
-
-      if (
-        formData.ac_end_assessment &&
-        formData.ac_start_assessment &&
-        dayjs(formData.ac_end_assessment).isBefore(
-          dayjs(formData.ac_start_assessment)
-        )
-      ) {
-        newErrors.ac_end_assessment =
-          "❌ วันสิ้นสุดประเมินต้องอยู่หลังวันเริ่มประเมิน";
-      }
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
   const uploadImageToCloudinary = async (file: File) => {
     if (!file || !file.type.startsWith("image/")) {
@@ -332,16 +165,17 @@ const CreateActivityAdmin: React.FC = () => {
     return data.secure_url;
   };
 
-  const convertToDate = (value: string | null | undefined) =>
-    value && value.trim() !== "" ? new Date(value) : undefined;
+  // const convertToDate = (value: string | null | undefined) =>
+  //   value && value.trim() !== "" ? new Date(value) : undefined;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (!validateForm(formData, setErrors)) {
       toast.error("กรุณากรอกข้อมูลให้ถูกต้องก่อนส่งฟอร์ม!");
       return;
     }
+
 
     let imageUrl = "";
     if (formData.ac_image_url instanceof File) {
@@ -458,18 +292,20 @@ const CreateActivityAdmin: React.FC = () => {
     console.log("Assessments:", assessments); // ✅ ตรวจสอบว่า assessments มีค่าหรือไม่
   }, [assessments]);
 
-  // useEffect(() => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     ac_type:
-  //       prev.ac_type === "Hard Skill"
-  //         ? "HardSkill"
-  //         : prev.ac_type === "Soft Skill"
-  //         ? "SoftSkill"
-  //         : prev.ac_type,
-  //     ac_status: prev.ac_status || "Private",
-  //   }));
-  // }, [formData.ac_type, formData.ac_status]);
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+
+  const handleFormChange = (e: React.ChangeEvent<any> | SelectChangeEvent) => {
+    formHandleChange(e, setFormData);
+  };
+
+
+
+  // ✅ Wrapper ที่ fix setFormData
+  const handleDateTimeChange = (name: string, newValue: Dayjs | null) => {
+    handleDateTimeChangeBase(name, newValue, setFormData);
+  };
 
   return (
     <>
@@ -486,9 +322,14 @@ const CreateActivityAdmin: React.FC = () => {
 
                 {/* แถวแรก: ชื่อกิจกรรม + วันเวลาปิด/เปิดลงทะเบียน */}
                 <div className="flex space-x-6  ">
-                  <ActivityInfoSection formData={formData} handleChange={handleChange} />
-
-                  <RegisterPeriodSection formData={formData} handleDateTimeChange={handleDateTimeChange} />
+                  <ActivityInfoSection
+                    formData={formData}
+                    handleChange={handleFormChange} // ✅ รับได้ 1 argument ตาม type ที่ต้องการ
+                  />
+                  <RegisterPeriodSection
+                    formData={formData}
+                    handleDateTimeChange={handleDateTimeChange}
+                  />
 
                 </div>
 
@@ -497,7 +338,7 @@ const CreateActivityAdmin: React.FC = () => {
 
                   <DescriptionSection
                     formData={formData}
-                    handleChange={handleChange}
+                    handleChange={handleFormChange}
                   />
 
                   <ActivityTimeSection
@@ -512,8 +353,10 @@ const CreateActivityAdmin: React.FC = () => {
 
                 <TypeAndLocationSection
                   formData={formData}
-                  handleChange={handleChange}
-                  handleChangeSelect={handleChangeSelect}
+                  handleChange={(e) => handleChange(e, setFormData)}
+                  setSelectedFloor={setSelectedFloor}
+                  setSelectedRoom={setSelectedRoom}
+                  setSeatCapacity={setSeatCapacity}
                 />
 
                 <RoomSelectionSection
@@ -528,7 +371,7 @@ const CreateActivityAdmin: React.FC = () => {
                 <StatusAndSeatSection
                   formData={formData}
                   seatCapacity={seatCapacity}
-                  handleChange={handleChange}
+                  handleChange={handleFormChange}
                   setSeatCapacity={setSeatCapacity}
                   selectedRoom={selectedRoom}
                 />
@@ -543,7 +386,7 @@ const CreateActivityAdmin: React.FC = () => {
                 <AssessmentSection
                   formData={formData}
                   assessments={assessments}
-                  handleChange={handleChange}
+                  handleChange={handleFormChange}
                   handleDateTimeChange={handleDateTimeChange}
                 />
 
