@@ -13,10 +13,12 @@ import Main from "./pages/Admin/main_admin";
 import ListActivityAdmin from "./pages/Admin/activity-admin/list_activity_admin";
 import TestCreate from "./pages/Test/test_create";
 import CreateActivityAdmin from "./pages/Admin/activity-admin/create_activity_admin";
-import ActivityInfoAdmin from "./pages/Admin/activity-admin/activity_info_admin";
+import ActivityInfoAdmin from "./pages/Admin/activity-admin/activity-info/activity_info_admin";
+// import ActivityInfoAdmin from "./pages/Admin/activity-admin/activity_info_admin";
 import EnrolledListAdmin from "./pages/Admin/activity-admin/enrolled_list_admin";
 import UpdateActivityAdmin from "./pages/Admin/activity-admin/update_activity_admin";
 // import Crud_Test from "./pages/Test/crud_test";
+
 
 //import pages Student
 import MainStudent from "./pages/Student/main_student";
