@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useActivityStore } from "../../../stores/Student/activity_student.store";
+// import { useActivityStore } from "../../../stores/Student/activity_student.store";
+import { useActivityStore } from "../../../stores/Student/activity_info_student";
 import {
   Clock,
   MapPin,
