@@ -65,6 +65,9 @@ export const validateForm = (formData: any, setErrors: any): boolean => {
     if (!formData.ac_end_time) {
       newErrors.ac_end_time = "กรุณาเลือกวันและเวลาสิ้นสุดกิจกรรม";
     }
+    if (!formData.ac_seat || Number(formData.ac_seat) <= 0) {
+      newErrors.ac_seat = "❌ กรุณาระบุจำนวนที่นั่งมากกว่า 0";
+    }
     if (
       formData.ac_location_type === "Course" &&
       (!formData.ac_recieve_hours || Number(formData.ac_recieve_hours) <= 0)

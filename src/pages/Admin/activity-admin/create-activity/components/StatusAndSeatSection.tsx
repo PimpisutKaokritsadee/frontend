@@ -8,6 +8,9 @@ interface Props {
   handleChange: (e: React.ChangeEvent<any> | SelectChangeEvent) => void;
   setSeatCapacity: (value: number | string) => void;
   selectedRoom: string;
+  setFormData: React.Dispatch<React.SetStateAction<any>>; // ✅ เพิ่ม
+  errors?: Record<string, string>; // ✅ สำหรับ helperText
+  setErrors: React.Dispatch<React.SetStateAction<any>>; // ✅ เพิ่ม
 }
 
 const StatusAndSeatSection: React.FC<Props> = ({
@@ -16,6 +19,9 @@ const StatusAndSeatSection: React.FC<Props> = ({
   handleChange,
   setSeatCapacity,
   selectedRoom,
+  setFormData,
+  errors = {},
+  setErrors,
 }) => {
   return (
     <div className="flex space-x-4 mt-5">
@@ -54,13 +60,26 @@ const StatusAndSeatSection: React.FC<Props> = ({
             const value = e.target.value;
             if (/^\d*$/.test(value)) {
               setSeatCapacity(value);
+
+              // ✅ sync กับ formData
+              setFormData((prev) => ({
+                ...prev,
+                ac_seat: Number(value),
+              }));
+
+              // ✅ เคลียร์ error เมื่อกรอกใหม่ถูกต้อง
+              if (Number(value) > 0) {
+                setErrors((prev) => ({
+                  ...prev,
+                  ac_seat: "", // clear เฉพาะ field นี้
+                }));
+              }
             }
           }}
-          error={Number(seatCapacity) < 0}
-          helperText={
-            Number(seatCapacity) < 0 ? "❌ กรุณาใส่จำนวนที่นั่ง" : ""
-          }
-          disabled={selectedRoom !== ""} // ✅ ปิดการแก้ไขถ้ามีการเลือกห้องแล้ว
+
+          error={!!errors.ac_seat}
+          helperText={errors.ac_seat || ""}
+          disabled={selectedRoom !== ""}
           sx={{ height: "56px" }}
         />
       </div>
