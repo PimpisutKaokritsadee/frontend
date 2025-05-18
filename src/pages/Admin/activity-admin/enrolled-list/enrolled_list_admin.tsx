@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useActivityStore } from "../../../../stores/Admin/activity_info_admin";
-import { useEnrolledStudentStore } from "../../../../stores/Admin/enrolled_student_admin";
+import { useActivityStore } from "../../../../stores/Admin/store_activity_info_admin";
+import { useEnrolledStudentStore } from "../../../../stores/Admin/store_enrolled_student_admin";
 
 import EnrolledListHeader from "./components/EnrolledListHeader";
 import EnrolledListFilter from "./components/EnrolledListFilter";

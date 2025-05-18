@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { fetchEnrolledStudentsByActivityId } from "../../services/Admin/enrolled_student_admin";
-import type { EnrolledStudent } from "../../types/Admin/enrolled_list_admin";
+import { fetchEnrolledStudentsByActivityId } from "../../services/Admin/service_enrolled_student_admin";
+import type { EnrolledStudent } from "../../types/Admin/type_enrolled_list_admin";
 
 export const useEnrolledStudentStore = create<{
   enrolledStudents: EnrolledStudent[];

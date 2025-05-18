@@ -6,8 +6,7 @@ import {
   HouseWifi,
 } from "lucide-react";
 import Typography from "@mui/material/Typography";
-import type { Activity } from "../../../../../types/Admin/activity_info_admin";
-
+import type { Activity } from "../../../../../types/Admin/type_activity_info_admin";
 
 interface Props {
   activity: Activity;
@@ -66,14 +65,19 @@ export default function ActivityDetails({ activity }: Props) {
           ) : (
             <Typography
               component="span"
-              sx={{ display: "inline-flex", alignItems: "center", gap: 1, mr: 2 }}
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 1,
+                mr: 2,
+              }}
             >
               <HouseWifi /> {activity.location_type}
             </Typography>
           )}
           <CalendarDays size={25} /> วันที่จัดกิจกรรม{" "}
-          {formatDate(activity.start_time)} <Hourglass size={25} />{" "}
-          ปิดลงทะเบียน {formatDate(activity.end_register)} 
+          {formatDate(activity.start_time)} <Hourglass size={25} /> ปิดลงทะเบียน{" "}
+          {formatDate(activity.end_register)}
           <MapPin size={25} />{" "}
           {activity.location_type === "Onsite"
             ? `ห้อง ${activity.room}`

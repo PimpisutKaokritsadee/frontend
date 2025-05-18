@@ -1,5 +1,5 @@
 import axiosInstance from "../../libs/axios";
-import { ApiActivity } from "../../types/Admin/activity_info_admin";
+import { ApiActivity } from "../../types/Admin/type_activity_info_admin";
 
 export const fetchAllActivities = async (): Promise<ApiActivity[]> => {
   const { data } = await axiosInstance.get("/admin/activity/get-activities");

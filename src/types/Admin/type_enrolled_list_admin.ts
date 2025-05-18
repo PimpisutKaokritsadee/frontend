@@ -1,4 +1,4 @@
-import { Activity } from "./activity_info_admin";
+import { Activity } from "./type_activity_info_admin";
 
 export interface EnrolledStudent {
   id: string;

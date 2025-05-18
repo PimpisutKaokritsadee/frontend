@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useActivityStore } from "../../../../stores/Admin/activity_info_admin";
+import { useActivityStore } from "../../../../stores/Admin/store_activity_info_admin";
 import Loading from "../../../../components/Loading";
 import ActivityHeader from "./components/ActivityHeader";
 import ActivityImage from "./components/ActivityImage";

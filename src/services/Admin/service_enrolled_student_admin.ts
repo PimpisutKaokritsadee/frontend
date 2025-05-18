@@ -1,5 +1,5 @@
 import axiosInstance from "../../libs/axios";
-import type { EnrolledStudent } from "../..//types/Admin/enrolled_list_admin";
+import type { EnrolledStudent } from "../../types/Admin/type_enrolled_list_admin";
 
 export const fetchEnrolledStudentsByActivityId = async (
   activityId: number

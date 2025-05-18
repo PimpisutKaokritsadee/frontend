@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { toast } from "sonner";
-import type { ActivityState, ApiActivity, Activity } from "../../types/Student/activity_info_student";
+import type { ActivityState, ApiActivity, Activity } from "../../types/Student/type_activity_info_admin";
 import {
   fetchStudentActivities,
   fetchActivity,
@@ -8,7 +8,7 @@ import {
   fetchEnrolledActivities,
   enrollActivity,
   unenrollActivity,
-} from "../../services/Student/activity_info_student";
+} from "../../services/Student/service_activity_info_admin";
 
 const mapActivityData = (apiData: ApiActivity): Activity => ({
   id: apiData.ac_id.toString(),

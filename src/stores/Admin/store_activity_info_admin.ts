@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { ActivityState, ApiActivity, Activity } from "../../types/Admin/activity_info_admin";
-import { fetchActivityById }from "../../services/Admin/activity_info_admin";
+import type { ActivityState, ApiActivity, Activity } from "../../types/Admin/type_activity_info_admin";
+import { fetchActivityById }from "../../services/Admin/service_activity_info_admin";
 
 // ✅ mapActivityData ยังอยู่ใน store ตามที่คุณต้องการ
 const mapActivityData = (apiData: ApiActivity): Activity => ({

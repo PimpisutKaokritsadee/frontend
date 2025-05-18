@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useActivityStore } from "../../../../stores/Student/activity_info_student";
+import { useActivityStore } from "../../../../stores/Student/store_activity_info";
 
 // Import components
 import ActivityHeader from "./components/ActivityHeader";
