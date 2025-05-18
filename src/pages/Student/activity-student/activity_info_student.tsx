@@ -83,11 +83,8 @@ export default function ActivityInfoStudent() {
   }, [enrolledActivities, id]); // ✅ ทำงานเมื่อ enrolledActivities หรือ id เปลี่ยน
 
   console.log(id);
-
   console.log(enrolledActivities);
-
   console.log("✅ isEnrolled (client-side):", isEnrolled);
-
   console.log();
 
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);

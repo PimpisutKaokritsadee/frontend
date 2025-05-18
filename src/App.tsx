@@ -24,7 +24,8 @@ import UpdateActivityAdmin from "./pages/Admin/activity-admin/update_activity_ad
 
 //import pages Student
 import MainStudent from "./pages/Student/main_student";
-import ActivityInfoStudent from "./pages/Student/activity-student/activity_info_student";
+// import ActivityInfoStudent from "./pages/Student/activity-student/activity_info_student";
+import ActivityInfoStudent from "./pages/Student/activity-student/activity-info/activity_info_student";
 import ListActivityStudent from "./pages/Student/activity-student/list_activity_student";
 
 function App() {
