@@ -19,7 +19,7 @@ import UpdateActivityAdmin from "./pages/Admin/activity-admin/update_activity_ad
 // import Crud_Test from "./pages/Test/crud_test";
 
 //import pages Student
-import MainStudent from "./pages/Student/main_student";
+import MainStudent from "./pages/Student/main-student/main_student";
 import ActivityInfoStudent from "./pages/Student/activity-student/activity_info_student";
 import ListActivityStudent from "./pages/Student/activity-student/list_activity_student";
 
