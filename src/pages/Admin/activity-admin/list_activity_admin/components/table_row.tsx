@@ -104,7 +104,7 @@
 
 import { Activity } from "./table";
 import { useNavigate } from "react-router-dom";
-import { useActivityStore } from "../../../stores/Admin/activity_store";
+import { useActivityStore } from "../../../../../stores/Admin/activity_list_store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 

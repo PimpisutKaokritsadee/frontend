@@ -93,7 +93,7 @@
 
 // export default TableHeader;
 
-import { Activity } from "../components/table";
+import { Activity } from "./table";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 interface TableHeaderProps {

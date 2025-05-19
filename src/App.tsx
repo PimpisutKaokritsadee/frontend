@@ -10,7 +10,7 @@ import Login from "./pages/login";
 
 //import pages Admin
 import Main from "./pages/Admin/main_admin";
-import ListActivityAdmin from "./pages/Admin/activity-admin/list_activity_admin";
+import ListActivityAdmin from "./pages/Admin/activity-admin/list_activity_admin/list_activity_admin";
 import TestCreate from "./pages/Test/test_create";
 import CreateActivityAdmin from "./pages/Admin/activity-admin/create_activity_admin";
 import ActivityInfoAdmin from "./pages/Admin/activity-admin/activity-info/activity_info_admin";
@@ -22,8 +22,8 @@ import UpdateActivityAdmin from "./pages/Admin/activity-admin/update_activity_ad
 
 //import pages Student
 import MainStudent from "./pages/Student/main_student";
-import ActivityInfoStudent from "./pages/Student/activity-student/activity-info/activity_info_student";
-import ListActivityStudent from "./pages/Student/activity-student/list_activity_student";
+import ActivityInfoStudent from "./pages/Student/activity-student/activity_info_student";
+import ListActivityStudent from "./pages/Student/activity-student/list_activity_admin/list_activity_student";
 
 function App() {
   return (
