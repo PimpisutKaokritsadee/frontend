@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ImagePlus } from "lucide-react";
-import { useActivityStore } from "../../../stores/Admin/activity_store"; // ✅ นำเข้า Zustand Store
+// import { useActivityStore } from "../../../stores/Admin/activity_store"; // ✅ นำเข้า Zustand Store
 import { useAssessmentStore } from "../../../stores/Admin/assessment_store";
 import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
@@ -20,35 +20,36 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { TextField, IconButton, Paper, Box, Typography } from "@mui/material";
 import { Delete, Add } from "@mui/icons-material";
 import { SelectChangeEvent } from "@mui/material"; // ✅ นำเข้า SelectChangeEvent
-
-interface FormData {
-  ac_id: number | null;
-  ac_name: string;
-  assessment_id?: number | null;
-  ac_company_lecturer: string;
-  ac_description: string;
-  ac_type: string;
-  ac_room?: string | null;
-  ac_seat?: string | null;
-  ac_food?: string[] | null;
-  ac_status: string;
-  ac_location_type: string;
-  ac_state: string;
-  ac_start_register: string | null;
-  ac_end_register: string | null;
-  ac_create_date?: string;
-  ac_last_update?: string;
-  ac_registered_count?: number;
-  ac_attended_count?: number;
-  ac_not_attended_count?: number;
-  ac_start_time?: string | null;
-  ac_end_time?: string | null;
-  ac_image_url?: File | null;
-  ac_normal_register?: string | null;
-  ac_recieve_hours?: number | null;
-  ac_start_assessment?: string | null;
-  ac_end_assessment?: string | null;
-}
+import { useActivityStore } from "../../../stores/Admin/store_create_activity";
+import type { FormData } from "../../../types/Admin/type_create_activity_admin";
+// interface FormData {
+//   ac_id: number | null;
+//   ac_name: string;
+//   assessment_id?: number | null;
+//   ac_company_lecturer: string;
+//   ac_description: string;
+//   ac_type: string;
+//   ac_room?: string | null;
+//   ac_seat?: string | null;
+//   ac_food?: string[] | null;
+//   ac_status: string;
+//   ac_location_type: string;
+//   ac_state: string;
+//   ac_start_register: string | null;
+//   ac_end_register: string | null;
+//   ac_create_date?: string;
+//   ac_last_update?: string;
+//   ac_registered_count?: number;
+//   ac_attended_count?: number;
+//   ac_not_attended_count?: number;
+//   ac_start_time?: string | null;
+//   ac_end_time?: string | null;
+//   ac_image_url?: File | null;
+//   ac_normal_register?: string | null;
+//   ac_recieve_hours?: number | null;
+//   ac_start_assessment?: string | null;
+//   ac_end_assessment?: string | null;
+// }
 
 const CreateActivityAdmin: React.FC = () => {
   const { createActivity, activityLoading } = useActivityStore(); //
